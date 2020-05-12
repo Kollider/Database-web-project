@@ -1,0 +1,16 @@
+{% extends "layout.html" %} {% block content %} {% for ofr in offer.items %}
+<article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ url_for('static', filename='prod_pics/' + ofr.image_file) }}">
+    <div class="media-body">
+        <div class="article-metadata">
+            <!-- <a class="mr-2">{{ ofr.name }}</a> -->
+            <small class="text-muted">{{ ofr.date_added.strftime('%Y-%m-%d') }}</small>
+        </div>
+        <h2><a class="article-title" href="{{ url_for('offer', offer_id=ofr.id) }}">{{ ofr.name }}</a></h2>
+        <p class="article-content">{{ ofr.details }}</p>
+    </div>
+    <a>{{ ofr.price }} uah</a>
+</article>
+{% endfor %} {% for page_num in offer.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if page_num %} {% if offer.page == page_num %}
+<a class="btn btn-info mb-4" href="{{ url_for('offers', page=page_num) }}">{{ page_num }}</a> {% else %}
+<a class="btn btn-outline-info mb-4" href="{{ url_for('offers', page=page_num) }}">{{ page_num }}</a> {% endif %} {% else %} ... {% endif %} {% endfor %} {% endblock content %}
